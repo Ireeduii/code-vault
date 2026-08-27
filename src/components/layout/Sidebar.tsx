@@ -170,8 +170,7 @@ export function Sidebar() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 flex flex-col h-screen sticky top-0">
-      {/* Logo */}
+    <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800  bg-white dark:bg-zinc-950 flex flex-col h-screen sticky top-0">
       <div className="h-14 px-6 flex items-center border-b border-zinc-200 dark:border-zinc-800">
         <Link
           href="/dashboard"
@@ -184,7 +183,6 @@ export function Sidebar() {
         </Link>
       </div>
 
-      {/* Nav List */}
       <div className="flex-1 px-3 py-4 space-y-6 overflow-y-auto">
         <div className="space-y-1">
           {navigationItems.map((item) => {
@@ -215,7 +213,6 @@ export function Sidebar() {
           })}
         </div>
 
-        {/* Organize */}
         <div className="space-y-1">
           <p className="px-3 text-xs font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
             Organize
@@ -229,7 +226,6 @@ export function Sidebar() {
           </Link>
         </div>
 
-        {/* Workspace */}
         <div className="space-y-1">
           <p className="px-3 text-xs font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
             Workspace
@@ -250,7 +246,6 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* Bottom Actions & User Profile */}
       <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 space-y-1">
         <Link
           href="/settings"
@@ -260,7 +255,6 @@ export function Sidebar() {
           Settings
         </Link>
 
-        {/* Theme Switcher Button */}
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
@@ -275,8 +269,6 @@ export function Sidebar() {
           </span>
         </button>
 
-        {/* Clerk User Button Section */}
-        {/* Clerk User Button Section */}
         <div className="pt-2 mt-2 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-3 py-1">
           <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
             Account
