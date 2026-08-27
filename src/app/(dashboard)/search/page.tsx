@@ -1,3 +1,4 @@
+// src/app/(dashboard)/search/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -27,13 +28,13 @@ export default function SearchPage() {
   });
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-8">
+    <div className="p-8 max-w-5xl mx-auto space-y-8 animate-in fade-in duration-200">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-50">
           Search your knowledge base
         </h1>
-        <p className="text-zinc-600 dark:text-zinc-400">
+        <p className="text-zinc-400">
           Find your saved snippets, bugs, and solutions instantly.
         </p>
       </div>
@@ -47,7 +48,7 @@ export default function SearchPage() {
             placeholder="Search code, bugs, solutions, technologies (e.g. Prisma, Next.js)..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full pl-12 pr-4 py-4 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-100 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             autoFocus
           />
         </div>
@@ -59,7 +60,7 @@ export default function SearchPage() {
             className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               isSemantic
                 ? "bg-indigo-600 text-white"
-                : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+                : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-200"
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -82,11 +83,11 @@ export default function SearchPage() {
       </div>
 
       {filteredSnippets.length === 0 && (
-        <div className="text-center py-16 space-y-3">
-          <p className="text-zinc-500">
+        <div className="text-center py-16 space-y-3 bg-zinc-900/50 border border-zinc-800 rounded-xl">
+          <p className="text-zinc-400">
             No snippets found matching &quot;{query}&quot;
           </p>
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-zinc-500">
             Try searching for another keyword or technology tag.
           </p>
         </div>
