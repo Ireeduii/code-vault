@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createSnippet } from "@/lib/services";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
 

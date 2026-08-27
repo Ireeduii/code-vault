@@ -41,18 +41,61 @@ export async function getSnippet(id: string): Promise<Snippet | null> {
   }
 }
 
-export async function createSnippet(newSnippet: any): Promise<Snippet | null> {
+// export async function createSnippet(newSnippet: any): Promise<Snippet | null> {
+//   try {
+//     // tags yaj c irsenig check hiij, string array bolgono
+//     let formattedTags: string[] = ["General"];
+//     if (Array.isArray(newSnippet.tags)) {
+//       formattedTags = newSnippet.tags.map((t: any) =>
+//         typeof t === "string" ? t : t?.name || "General",
+//       );
+//     } else if (typeof newSnippet.tags === "string") {
+//       formattedTags = newSnippet.tags
+//         .split(",")
+//         .map((t: string) => t.trim())
+//         .filter(Boolean);
+//     }
+
+//     const created = await prisma.snippet.create({
+//       data: {
+//         title: newSnippet.title,
+//         description: newSnippet.description || "",
+//         code: newSnippet.code,
+//         language: newSnippet.language || "javascript",
+//         tags: formattedTags,
+//         isFavorite: newSnippet.isFavorite ?? false,
+//         userId: "default-user",
+//       },
+//     });
+
+//     return {
+//       ...created,
+//       description: created.description || "",
+//       tags: Array.isArray(created.tags) ? created.tags : [],
+//     } as unknown as Snippet;
+//   } catch (error) {
+//     console.error("Failed to create snippet:", error);
+//     return null;
+//   }
+// }
+export async function createSnippet(newSnippet: {
+  title: string;
+  description?: string;
+  code: string;
+  language: string;
+  tags?: string[] | string;
+  isFavorite?: boolean;
+}): Promise<Snippet | null> {
   try {
-    // tags yaj c irsenig check hiij, string array bolgono
     let formattedTags: string[] = ["General"];
     if (Array.isArray(newSnippet.tags)) {
-      formattedTags = newSnippet.tags.map((t: any) =>
-        typeof t === "string" ? t : t?.name || "General",
+      formattedTags = newSnippet.tags.map((t) =>
+        typeof t === "string" ? t : String(t),
       );
     } else if (typeof newSnippet.tags === "string") {
       formattedTags = newSnippet.tags
         .split(",")
-        .map((t: string) => t.trim())
+        .map((t) => t.trim())
         .filter(Boolean);
     }
 

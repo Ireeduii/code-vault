@@ -1,6 +1,6 @@
 import { getSnippet } from "@/lib/services";
 import Link from "next/link";
-import { ArrowLeft, Copy, Star, Sparkles } from "lucide-react";
+import { ArrowLeft, Copy, Sparkles } from "lucide-react";
 import { notFound } from "next/navigation";
 
 export default async function SnippetDetailPage({

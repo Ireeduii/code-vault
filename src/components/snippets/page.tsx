@@ -39,7 +39,6 @@ export default function SnippetsPage() {
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in.fade-in duration-200">
-      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-zinc-50">
@@ -58,7 +57,6 @@ export default function SnippetsPage() {
         </Link>
       </div>
 
-      {/* Search & Filters Bar */}
       <div className="flex flex-col sm:flex-row items-center gap-4">
         <div className="relative flex-1 w-full">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
@@ -71,7 +69,6 @@ export default function SnippetsPage() {
           />
         </div>
 
-        {/* Language Filter */}
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <Filter className="w-4 h-4 text-zinc-400 shrink-0" />
           <select
@@ -89,7 +86,6 @@ export default function SnippetsPage() {
         </div>
       </div>
 
-      {/* Grid of Snippets */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredSnippets.map((snippet) => (
           <SnippetCard
@@ -100,7 +96,6 @@ export default function SnippetsPage() {
         ))}
       </div>
 
-      {/* Empty State */}
       {filteredSnippets.length === 0 && (
         <div className="text-center py-16 space-y-3 bg-zinc-900/50 border border-zinc-800 rounded-xl">
           <p className="text-zinc-400 font-medium">No snippets found</p>
