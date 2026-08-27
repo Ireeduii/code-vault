@@ -16,7 +16,6 @@ export default async function SnippetDetailPage({
 
   return (
     <div className="p-8 max-w-4xl mx-auto space-y-8">
-      {/* Top bar */}
       <div className="flex items-center justify-between">
         <Link
           href="/dashboard"
@@ -41,7 +40,6 @@ export default async function SnippetDetailPage({
         </p>
       </div>
 
-      {/* Code Viewer Box */}
       <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-950 overflow-hidden shadow-sm">
         <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-900 border-b border-zinc-800 text-xs text-zinc-400 font-mono">
           <span>code snippet</span>
@@ -56,7 +54,6 @@ export default async function SnippetDetailPage({
         </div>
       </div>
 
-      {/* Explanation / Markdown notes */}
       {snippet.explanation && (
         <div className="space-y-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6">
           <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
@@ -68,7 +65,6 @@ export default async function SnippetDetailPage({
         </div>
       )}
 
-      {/* ai */}
       {snippet.aiInsights && (
         <div className="space-y-4 bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/50 rounded-xl p-6">
           <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold text-sm">

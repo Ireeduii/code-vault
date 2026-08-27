@@ -1,4 +1,3 @@
-// src/app/(dashboard)/search/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -16,7 +15,6 @@ export default function SearchPage() {
     getSnippets().then(setSnippets);
   }, []);
 
-  // Filter snippets based on query (title, description, tags, or language)
   const filteredSnippets = snippets.filter((s) => {
     const q = query.toLowerCase();
     return (

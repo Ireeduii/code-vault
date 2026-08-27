@@ -14,22 +14,53 @@ export default function NewSnippetPage() {
   const [language, setLanguage] = useState("TypeScript");
   const [tagName, setTagName] = useState("");
 
+  //   const handleSubmit = async (e: React.FormEvent) => {
+  //     e.preventDefault();
+  //     if (!title || !code) return;
+
+  //     await createSnippet({
+  //       title,
+  //       description,
+  //       code,
+  //       language,
+  //       tags: tagName
+  //         ? [{ id: Date.now().toString(), name: tagName }]
+  //         : [{ id: "1", name: "General" }],
+  //       isFavorite: false,
+  //     });
+
+  //     router.push("/dashboard");
+  //   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !code) return;
 
-    await createSnippet({
-      title,
-      description,
-      code,
-      language,
-      tags: tagName
-        ? [{ id: Date.now().toString(), name: tagName }]
-        : [{ id: "1", name: "General" }],
-      isFavorite: false,
-    });
+    try {
+      const response = await fetch("/api/snippets", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          code,
+          language,
+          tags: tagName || "General",
+          isFavorite: false,
+        }),
+      });
 
-    router.push("/dashboard");
+      if (!response.ok) {
+        throw new Error("Failed to create snippet");
+      }
+
+      router.push("/dashboard");
+      router.refresh();
+    } catch (error) {
+      console.error("Error creating snippet:", error);
+      alert("Snippet хадгалахад алдаа гарлаа.");
+    }
   };
 
   return (
