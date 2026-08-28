@@ -22,7 +22,6 @@ export default function SnippetsPage() {
     setSnippets([...updated]);
   };
 
-  // Filter snippets based on search and language
   const filteredSnippets = snippets.filter((snippet) => {
     const matchesSearch =
       snippet.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

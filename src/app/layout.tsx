@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { CommandPalette } from "@/components/search/CommandPalette";
+import { Sidebar } from "@/components/layout/Sidebar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
@@ -28,12 +29,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="dark">
+      <html lang="en" className="dark" suppressHydrationWarning>
         <body
           className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100`}
         >
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            {children}
+            <div className="flex min-h-screen">
+              <Sidebar />
+              <main className="flex-1 overflow-y-auto min-h-screen">
+                {children}
+              </main>
+            </div>
           </ThemeProvider>
           <CommandPalette />
         </body>

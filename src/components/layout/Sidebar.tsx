@@ -22,12 +22,12 @@ const navigationItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "All Snippets", href: "/snippets", icon: Code2 },
   { name: "Favorites", href: "/favorites", icon: Star },
-  { name: "Recently Viewed", href: "/snippets", icon: Clock },
+  { name: "Recently Viewed", href: "/snippets?filter=recent", icon: Clock },
 ];
 
 const workspaceItems = [
-  { name: "My Snippets", href: "/snippets", icon: FolderGit2 },
-  { name: "Shared With Me", href: "/snippets", icon: Share2 },
+  { name: "My Snippets", href: "/snippets?filter=mine", icon: FolderGit2 },
+  { name: "Shared With Me", href: "/snippets?filter=shared", icon: Share2 },
 ];
 
 export function Sidebar() {
@@ -35,7 +35,7 @@ export function Sidebar() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800  bg-white dark:bg-zinc-950 flex flex-col h-screen sticky top-0">
+    <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-col h-screen sticky top-0">
       <div className="h-14 px-6 flex items-center border-b border-zinc-200 dark:border-zinc-800">
         <Link
           href="/dashboard"
@@ -84,9 +84,21 @@ export function Sidebar() {
           </p>
           <Link
             href="/tags"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200"
+            className={cn(
+              "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+              pathname === "/tags"
+                ? "bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400"
+                : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200",
+            )}
           >
-            <Tags className="w-4 h-4 text-zinc-500" />
+            <Tags
+              className={cn(
+                "w-4 h-4",
+                pathname === "/tags"
+                  ? "text-indigo-600 dark:text-indigo-400"
+                  : "text-zinc-500",
+              )}
+            />
             Tags
           </Link>
         </div>
@@ -97,13 +109,26 @@ export function Sidebar() {
           </p>
           {workspaceItems.map((item) => {
             const Icon = item.icon;
+            const isActive = pathname === item.href;
             return (
               <Link
                 key={item.name}
                 href={item.href}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200"
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                  isActive
+                    ? "bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400"
+                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200",
+                )}
               >
-                <Icon className="w-4 h-4 text-zinc-500" />
+                <Icon
+                  className={cn(
+                    "w-4 h-4",
+                    isActive
+                      ? "text-indigo-600 dark:text-indigo-400"
+                      : "text-zinc-500",
+                  )}
+                />
                 {item.name}
               </Link>
             );
@@ -114,9 +139,21 @@ export function Sidebar() {
       <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 space-y-1">
         <Link
           href="/settings"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+          className={cn(
+            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+            pathname === "/settings"
+              ? "bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400"
+              : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900",
+          )}
         >
-          <Settings className="w-4 h-4 text-zinc-500" />
+          <Settings
+            className={cn(
+              "w-4 h-4",
+              pathname === "/settings"
+                ? "text-indigo-600 dark:text-indigo-400"
+                : "text-zinc-500",
+            )}
+          />
           Settings
         </Link>
 
