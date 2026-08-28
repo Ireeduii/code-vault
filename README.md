@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Code Vault
+Modern web for saving , organizing and analyzing code snippets with AI-powered insights.
 
-## Getting Started
+## Tech Stack
+  * Framework: Next.js(app router)
+  * Language: TypeScript
+  * Database & ORM: PostgreSQL, Prisma ORM
+  * Authentication: Clerk Auth
+  * Al integration: Google Gemini Al API
 
-First, run the development server:
+## Features
+  * Al Code Insights: Analyze snippets, receive improvements tips using Gemini Al.
+  * Smart Search & Filter: Quickly find code by title, description, programming language or tags.
+  * Favorites System: Star is your most important snippets.
+  * Authentication: Secure user accounts and protected routes powered by Clerk.
+  * Dark/Light Mode: Built-in theme switcher for a comfortable viewing experience.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Getting started 
+  * git clone https://github.com/Ireeduii/code-vault.git
+  * cd code-vault
+  * npm install
+  * npm run dev
