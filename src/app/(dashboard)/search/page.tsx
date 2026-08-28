@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getSnippets } from "@/lib/services";
 import { Snippet } from "@/types";
 import { SnippetCard } from "@/components/snippets/SnippetCard";
 import { Search, Sparkles } from "lucide-react";
@@ -12,11 +11,34 @@ export default function SearchPage() {
   const [isSemantic, setIsSemantic] = useState(false);
 
   useEffect(() => {
-    getSnippets().then(setSnippets);
+    fetch("/api/snippets")
+      .then((res) => res.json())
+      .then((data) => setSnippets(data))
+      .catch((error) => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    const fetchSnippets = async () => {
+      try {
+        const res = await fetch("/api/snippets");
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch snippets");
+        }
+
+        const data = await res.json();
+        setSnippets(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchSnippets();
   }, []);
 
   const filteredSnippets = snippets.filter((s) => {
     const q = query.toLowerCase();
+
     return (
       s.title.toLowerCase().includes(q) ||
       s.description.toLowerCase().includes(q) ||
@@ -27,20 +49,20 @@ export default function SearchPage() {
 
   return (
     <div className="p-8 max-w-5xl mx-auto space-y-8 animate-in fade-in duration-200">
-      {/* Header */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight text-zinc-50">
           Search your knowledge base
         </h1>
+
         <p className="text-zinc-400">
           Find your saved snippets, bugs, and solutions instantly.
         </p>
       </div>
 
-      {/* Big Search Input */}
       <div className="space-y-4">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+
           <input
             type="text"
             placeholder="Search code, bugs, solutions, technologies (e.g. Prisma, Next.js)..."
@@ -51,7 +73,6 @@ export default function SearchPage() {
           />
         </div>
 
-        {/* Semantic Search Toggle */}
         <div className="flex items-center justify-between px-1">
           <button
             onClick={() => setIsSemantic(!isSemantic)}
@@ -62,6 +83,7 @@ export default function SearchPage() {
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
+
             {isSemantic
               ? "Semantic Search Active"
               : "Enable Semantic AI Search"}
@@ -73,7 +95,6 @@ export default function SearchPage() {
         </div>
       </div>
 
-      {/* Results Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredSnippets.map((snippet) => (
           <SnippetCard key={snippet.id} snippet={snippet} />
@@ -85,6 +106,7 @@ export default function SearchPage() {
           <p className="text-zinc-400">
             No snippets found matching &quot;{query}&quot;
           </p>
+
           <p className="text-xs text-zinc-500">
             Try searching for another keyword or technology tag.
           </p>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -35,6 +36,12 @@ const workspaceItems = [
 export function Sidebar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Hydration mismatch-ээс сэргийлж mount болсны дараа theme-ийг зөвөөр харуулна
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-col h-screen sticky top-0">
@@ -169,7 +176,7 @@ export function Sidebar() {
             <span>Theme</span>
           </div>
           <span className="text-xs uppercase text-zinc-400 font-mono">
-            {theme === "dark" ? "Dark" : "Light"}
+            {mounted ? (theme === "dark" ? "Dark" : "Light") : "..."}
           </span>
         </button>
 
