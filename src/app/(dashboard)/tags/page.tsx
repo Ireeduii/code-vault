@@ -1,25 +1,62 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getSnippets } from "@/lib/services";
 import { Snippet } from "@/types";
 import { SnippetCard } from "@/components/snippets/SnippetCard";
 import { Tags as TagsIcon, Hash } from "lucide-react";
 
+// Snippet доторх tag-ийн бүтцийг төлөөлөх тип (string эсвэл name-тэй объект байж болно)
+type TagType = string | { name?: string | null };
+
 export default function TagsPage() {
   const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    getSnippets().then(setSnippets);
+    fetch("/api/snippets")
+      .then((res) => res.json())
+      .then((data: unknown) => {
+        if (Array.isArray(data)) {
+          setSnippets(data as Snippet[]);
+        }
+        setLoading(false);
+      })
+      .catch((err: unknown) => {
+        console.error("Failed to fetch snippets:", err);
+        setLoading(false);
+      });
   }, []);
 
-  const allTags = Array.from(
-    new Set(snippets.flatMap((snippet) => snippet.tags.map((t) => t.name))),
+  // Tag-ийн нэрийг ялгаж авах туслах функц
+  const extractTagName = (tag: TagType): string | undefined => {
+    if (typeof tag === "string") return tag;
+    if (tag && typeof tag === "object" && "name" in tag) {
+      return tag.name ?? undefined;
+    }
+    return undefined;
+  };
+
+  // Бүх tag-уудыг давхардалгүйгээр цуглуулах
+  const allTags: string[] = Array.from(
+    new Set(
+      snippets.flatMap((snippet) => {
+        const tags = snippet.tags as unknown as TagType[];
+        if (!Array.isArray(tags)) return [];
+        return tags
+          .map((t) => extractTagName(t))
+          .filter((name): name is string => Boolean(name));
+      }),
+    ),
   );
 
+  // Сонгосон tag-аар шүүх
   const filteredSnippets = selectedTag
-    ? snippets.filter((s) => s.tags.some((t) => t.name === selectedTag))
+    ? snippets.filter((s) => {
+        const tags = s.tags as unknown as TagType[];
+        if (!Array.isArray(tags)) return false;
+        return tags.some((t) => extractTagName(t) === selectedTag);
+      })
     : snippets;
 
   return (
@@ -47,9 +84,12 @@ export default function TagsPage() {
         </button>
 
         {allTags.map((tagName) => {
-          const count = snippets.filter((s) =>
-            s.tags.some((t) => t.name === tagName),
-          ).length;
+          const count = snippets.filter((s) => {
+            const tags = s.tags as unknown as TagType[];
+            if (!Array.isArray(tags)) return false;
+            return tags.some((t) => extractTagName(t) === tagName);
+          }).length;
+
           return (
             <button
               key={tagName}
@@ -77,13 +117,19 @@ export default function TagsPage() {
             : "All Snippets"}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredSnippets.map((snippet) => (
-            <SnippetCard key={snippet.id} snippet={snippet} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center py-16 text-zinc-500">
+            Loading snippets...
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {filteredSnippets.map((snippet) => (
+              <SnippetCard key={snippet.id} snippet={snippet} />
+            ))}
+          </div>
+        )}
 
-        {filteredSnippets.length === 0 && (
+        {!loading && filteredSnippets.length === 0 && (
           <div className="text-center py-16 text-zinc-500 bg-zinc-900/50 border border-zinc-800 rounded-xl">
             No snippets found for this tag.
           </div>

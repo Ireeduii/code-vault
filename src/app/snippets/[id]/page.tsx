@@ -3,12 +3,15 @@ import Link from "next/link";
 import { ArrowLeft, Copy, Sparkles } from "lucide-react";
 import { notFound } from "next/navigation";
 
-export default async function SnippetDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const snippet = await getSnippet(params.id);
+interface PageProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+export default async function SnippetDetailPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const snippet = await getSnippet(resolvedParams.id);
 
   if (!snippet) {
     notFound();
@@ -30,7 +33,6 @@ export default async function SnippetDetailPage({
         </div>
       </div>
 
-      {/* Title & Description */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
           {snippet.title}
