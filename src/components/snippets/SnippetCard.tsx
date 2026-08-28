@@ -11,17 +11,15 @@ interface SnippetCardProps {
 }
 
 export function SnippetCard({ snippet, onToggleFavorite }: SnippetCardProps) {
-  // Local state for favorite status so UI updates instantly
   const [isFav, setIsFav] = useState(snippet.isFavorite ?? false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleToggleFavorite = async (e: React.MouseEvent) => {
-    e.preventDefault(); // Link руу үсрэхээс сэргийлэх
+    e.preventDefault();
     if (isLoading) return;
 
     setIsLoading(true);
     try {
-      // Backend API рүү хүсэлт илгээх (Жишээ API зам: /api/snippets/[id]/favorite)
       const res = await fetch(`/api/snippets/${snippet.id}/favorite`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -71,7 +69,7 @@ export function SnippetCard({ snippet, onToggleFavorite }: SnippetCardProps) {
             {snippet.language}
           </span>
           {Array.isArray(snippet.tags) &&
-            snippet.tags.map((tag: any) => {
+            snippet.tags.map((tag: string | { id?: string; name?: string }) => {
               const tagName = typeof tag === "string" ? tag : tag?.name;
               const tagId = typeof tag === "string" ? tag : tag?.id;
               if (!tagName) return null;

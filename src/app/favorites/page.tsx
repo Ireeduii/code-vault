@@ -7,9 +7,11 @@ import Link from "next/link";
 export default async function FavoritesPage() {
   const snippets: Snippet[] = await getSnippets();
 
-  const favoriteSnippets = snippets.filter(
-    (s: any) => s.isFavorite || s.favorite,
-  );
+  // any ашиглахгүйгээр s: Snippet болон type assertion хийж шүүнэ
+  const favoriteSnippets = snippets.filter((s: Snippet) => {
+    const snippetData = s as Snippet & { favorite?: boolean };
+    return snippetData.isFavorite || snippetData.favorite;
+  });
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-200">
