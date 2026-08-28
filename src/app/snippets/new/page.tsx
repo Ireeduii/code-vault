@@ -100,7 +100,6 @@ export default function NewSnippetPage() {
           />
         </div>
 
-        {/* Description */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
             Description
@@ -114,7 +113,6 @@ export default function NewSnippetPage() {
           />
         </div>
 
-        {/* Language & Tag */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
@@ -147,7 +145,6 @@ export default function NewSnippetPage() {
           </div>
         </div>
 
-        {/* Code Input */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
             Code
@@ -162,7 +159,6 @@ export default function NewSnippetPage() {
           />
         </div>
 
-        {/* Action Button */}
         <div className="flex justify-end gap-3 pt-4 border-t border-zinc-100 dark:border-zinc-800">
           <Link
             href="/dashboard"
