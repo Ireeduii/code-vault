@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { UserButton } from "@clerk/nextjs";
+import { StickyNote } from "lucide-react";
 import {
   LayoutDashboard,
   Code2,
@@ -23,6 +24,7 @@ const navigationItems = [
   { name: "All Snippets", href: "/snippets", icon: Code2 },
   { name: "Favorites", href: "/favorites", icon: Star },
   { name: "Recently Viewed", href: "/snippets?filter=recent", icon: Clock },
+  { name: "Notes", href: "/notes", icon: StickyNote },
 ];
 
 const workspaceItems = [
