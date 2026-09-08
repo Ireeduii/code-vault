@@ -141,7 +141,7 @@ export default async function DashboardPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-zinc-50">
-            Good evening, Developer.
+            Hi, Developer.
           </h1>
           <p className="text-zinc-400 mt-1">
             Your personal knowledge base for code and solutions.
