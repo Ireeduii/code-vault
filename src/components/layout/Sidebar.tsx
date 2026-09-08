@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { UserButton } from "@clerk/nextjs";
-import { StickyNote } from "lucide-react";
+import { UserButton, SignInButton, useAuth } from "@clerk/nextjs";
 import {
+  StickyNote,
   LayoutDashboard,
   Code2,
   Star,
@@ -17,6 +17,7 @@ import {
   Share2,
   Sun,
   Moon,
+  LogIn,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -38,13 +39,16 @@ export function Sidebar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Hydration mismatch-ээс сэргийлж mount болсны дараа theme-ийг зөвөөр харуулна
+  // Clerk-ийн нэвтэрсэн эсэх төлөвийг авна
+  const { isSignedIn, isLoaded } = useAuth();
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
   return (
-    <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-col h-screen sticky top-0">
+    <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-col h-screen sticky top-0 select-none">
+      {/* Logo Area */}
       <div className="h-14 px-6 flex items-center border-b border-zinc-200 dark:border-zinc-800">
         <Link
           href="/dashboard"
@@ -57,6 +61,7 @@ export function Sidebar() {
         </Link>
       </div>
 
+      {/* Navigation Content */}
       <div className="flex-1 px-3 py-4 space-y-6 overflow-y-auto">
         <div className="space-y-1">
           {navigationItems.map((item) => {
@@ -87,6 +92,7 @@ export function Sidebar() {
           })}
         </div>
 
+        {/* Organize Section */}
         <div className="space-y-1">
           <p className="px-3 text-xs font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
             Organize
@@ -112,6 +118,7 @@ export function Sidebar() {
           </Link>
         </div>
 
+        {/* Workspace Section */}
         <div className="space-y-1">
           <p className="px-3 text-xs font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">
             Workspace
@@ -145,6 +152,7 @@ export function Sidebar() {
         </div>
       </div>
 
+      {/* Footer Settings & Account Area */}
       <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 space-y-1">
         <Link
           href="/settings"
@@ -166,6 +174,7 @@ export function Sidebar() {
           Settings
         </Link>
 
+        {/* Theme Toggle */}
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
@@ -180,11 +189,24 @@ export function Sidebar() {
           </span>
         </button>
 
+        {/* Account Controls */}
         <div className="pt-2 mt-2 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-3 py-1">
           <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
             Account
           </span>
-          <UserButton />
+
+          {!isLoaded ? (
+            <div className="w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-800 animate-pulse" />
+          ) : isSignedIn ? (
+            <UserButton showName={false} />
+          ) : (
+            <SignInButton mode="modal">
+              <button className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition-colors shadow-sm">
+                <LogIn className="w-3 h-3" />
+                <span>Sign In</span>
+              </button>
+            </SignInButton>
+          )}
         </div>
       </div>
     </aside>

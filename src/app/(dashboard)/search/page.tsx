@@ -36,15 +36,30 @@ export default function SearchPage() {
     fetchSnippets();
   }, []);
 
+  // const filteredSnippets = snippets.filter((s) => {
+  //   const q = query.toLowerCase();
+
+  //   return (
+  //     s.title.toLowerCase().includes(q) ||
+  //     s.description.toLowerCase().includes(q) ||
+  //     s.language.toLowerCase().includes(q) ||
+  //     s.tags.some((t) => t.name.toLowerCase().includes(q))
+  //   );
+  // });
   const filteredSnippets = snippets.filter((s) => {
     const q = query.toLowerCase();
+    const matchTitle = s.title?.toLowerCase().includes(q) ?? false;
+    const matchDesc = s.description?.toLowerCase().includes(q) ?? false;
+    const matchLang = s.language?.toLowerCase().includes(q) ?? false;
 
-    return (
-      s.title.toLowerCase().includes(q) ||
-      s.description.toLowerCase().includes(q) ||
-      s.language.toLowerCase().includes(q) ||
-      s.tags.some((t) => t.name.toLowerCase().includes(q))
-    );
+    const matchTags = Array.isArray(s.tags)
+      ? s.tags.some((t) => {
+          const tagName = typeof t === "string" ? t : t?.name;
+          return tagName?.toLowerCase().includes(q);
+        })
+      : false;
+
+    return matchTitle || matchDesc || matchLang || matchTags;
   });
 
   return (
